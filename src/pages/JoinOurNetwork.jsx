@@ -1,18 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import * as Dialog from '@radix-ui/react-dialog';
+import { RiAddLine, RiCloseLine, RiSubtractLine } from "@remixicon/react";
+import { produce } from "immer";
 
 import Header from "../components/Header";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Footer from "../components/Footer";
 import SideBtn from "../components/SideBtn";
+import { createHealthCareProfessional, uploadFile } from "../config/firebase";
 import Icon1 from "../assets/join-our-network/icon1.svg"
 import Icon2 from "../assets/join-our-network/icon2.svg"
 import Icon3 from "../assets/join-our-network/icon3.svg"
 import Icon4 from "../assets/join-our-network/icon4.svg"
-import { useEffect, useState } from "react";
-import { produce } from "immer";
-import { RiAddLine, RiCloseLine, RiSubtractLine } from "@remixicon/react";
-import { createHealthCareProfessional, uploadFile } from "../config/firebase";
 
 export default function JoinOurNetwork() {
   const navigate = useNavigate();
@@ -347,14 +347,14 @@ export function ReferralForm3() {
 
     setLoading(true)
     const imageUrl = await uploadFile(image);
-    setFormData((s) => ({ ...s, aboutYourself: form.get('aboutYourself'), profilePic: imageUrl }));
+    setFormData((s) => ({ ...s, aboutYourself: form.get('aboutYourself'), profilePic: imageUrl, profilePicName: image.name }));
     setFormSubmitted(true);
   }
 
   const handleChange = (e) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      const newName = `${formData.email}.${file.name}`
+      const newName = `professionals/${formData.email}.${file.name}.${Date.now()}`
       const renamedFile = new File([file], newName, { type: file.type, lastModified: file.lastModified })
       setImage(renamedFile);
     }

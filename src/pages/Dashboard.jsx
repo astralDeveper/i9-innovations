@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
-import { RiArrowDropRightLine, RiCodeSSlashLine, RiGroup3Line, RiProfileLine, RiUserLine } from "@remixicon/react";
+import { RiArrowDropRightLine, RiCodeSSlashLine, RiGroup3Line, RiPagesLine, RiProfileLine, RiUserAddLine, RiUserLine } from "@remixicon/react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { getHealthCareProfessionals, getJobApplications, getJobs, getUserAppointments, signout } from "../config/firebase";
+import { getBlogPosts, getHealthCareProfessionals, getJobApplications, getJobs, getUserAppointments, signout } from "../config/firebase";
 
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
+  
   const [usersList, setUsersList] = useState([]);
   const [professionalsList, setProfessionalsList] = useState([]);
   const [jobApplicationsList, setJobApplicationsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
+  const [blogsList, setBlogsList] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const [users, professionals, jobApplications, jobs] = await Promise.all([
+      const [users, professionals, jobApplications, jobs, blogs] = await Promise.all([
         getUserAppointments(),
         getHealthCareProfessionals(),
         getJobApplications(),
-        getJobs()
+        getJobs(),
+        getBlogPosts(),
       ]);
 
-      return { users, professionals, jobApplications, jobs };
+      return { users, professionals, jobApplications, jobs, blogs };
     }
 
     getData().then((res) => {
@@ -28,6 +31,7 @@ export default function Dashboard() {
       setProfessionalsList(res.professionals);
       setJobApplicationsList(res.jobApplications);
       setJobsList(res.jobs);
+      setBlogsList(res.blogs);
     });
   }, []);
 
@@ -105,10 +109,35 @@ export default function Dashboard() {
                   <RiArrowDropRightLine size={20} color="#0065C0" className="shrink-0" />
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/dashboard/blogs" className="text-center flex items-center justify-between gap-2 hover:bg-[#0066c007] [&.active]:bg-[#0066c01e] [&.active]:text-black p-4 rounded-md">
+                  <RiPagesLine size={20} color="#0065C0" className="shrink-0" />
+                  <span>Blogs</span>
+                  <RiArrowDropRightLine size={20} color="#0065C0" className="shrink-0" />
+                </NavLink>
+              </li>
+              {/* <li>
+                <NavLink to="/dashboard/create-admin" className="text-center flex items-center justify-between gap-2 hover:bg-[#0066c007] [&.active]:bg-[#0066c01e] [&.active]:text-black p-4 rounded-md">
+                  <RiUserAddLine size={20} color="#0065C0" className="shrink-0" />
+                  <span>Create admin</span>
+                  <RiArrowDropRightLine size={20} color="#0065C0" className="shrink-0" />
+                </NavLink>
+              </li> */}
             </ul>
           </div>
 
-          <Outlet context={{ usersList, setUsersList, professionalsList, jobApplicationsList, setJobApplicationsList, jobsList, setJobsList }} />
+          <Outlet context={{ 
+            usersList,
+            setUsersList,
+            professionalsList,
+            setProfessionalsList,
+            jobApplicationsList,
+            setJobApplicationsList,
+            jobsList,
+            setJobsList,
+            blogsList,
+            setBlogsList,
+          }} />
         </div>
       </main>
     </>

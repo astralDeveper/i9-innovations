@@ -43,10 +43,10 @@ export default function Signup() {
 
   return (
     <>
-      <main className="header-background2 min-h-screen flex flex-col justify-center items-center relative px-4">
+      <main className="bg-white flex flex-col justify-center items-center relative px-4">
         <form className="bg-white rounded-md p-12 max-w-lg w-full max-sm:px-6" onSubmit={handleSubmit}>
           <h1 className="text-4xl font-bold text-center text-[#0065C0]">
-            Signup
+            Create Admin
           </h1>
 
           <div className="mt-8 max-w-sm mx-auto flex flex-col gap-8 focus-visible:[&_input]:outline focus-visible:[&_input]:outline-2 focus-visible:[&_input]:outline-[#0065C0]">

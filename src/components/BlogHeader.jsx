@@ -2,7 +2,7 @@ import { RiUserFill } from '@remixicon/react';
 
 export default function BlogHeader({ heading, img, author, date, category }) {
   return (
-    <section className="max-w-screen-lg mx-auto py-24 mt-32 px-4">
+    <section className="max-w-screen-lg mx-auto pt-24 pb-10 mt-32 px-4">
       <h2 className="text-center font-bold text-4xl text-zinc-600">
         {heading}
       </h2>

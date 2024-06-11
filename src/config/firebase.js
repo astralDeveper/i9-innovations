@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, serverTimestamp, setDoc, updateDoc, where, limit } from "firebase/firestore";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
@@ -21,7 +21,6 @@ export async function signup(email, password) {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   return user;
 };
-
 
 export async function signin(email, password) {
   const { user } = await signInWithEmailAndPassword(auth, email, password);
@@ -44,10 +43,15 @@ export async function setUser(id, email) {
 }
 
 export async function uploadFile(file) {
-  const storageRef = ref(storage, `${Date.now()}-${file.name}`);
+  const storageRef = ref(storage, file.name);
   const response = await uploadBytes(storageRef, file);
   const url = await getDownloadURL(response.ref);
   return url;
+}
+
+export async function deleteFile(name) {
+  const storageRef = ref(storage, name);
+  deleteObject(storageRef);
 }
 
 export async function createHealthCareProfessional(data) {
@@ -66,8 +70,16 @@ export async function createJob(data) {
   const docRef = await addDoc(collection(db, "jobs"), { ...data, createdAt: serverTimestamp() });
 }
 
+export async function createBlogPost(data) {
+  const docRef = await addDoc(collection(db, "blogs"), { ...data, createdAt: serverTimestamp() });
+}
+
 export async function editJob(id, data) {
   const docRef = await updateDoc(doc(db, 'jobs', id), data);
+}
+
+export async function editBlogPost(id, data) {
+  const docRef = await updateDoc(doc(db, 'blogs', id), data);
 }
 
 export async function getUserAppointments() {
@@ -98,6 +110,32 @@ export async function getJobs() {
   return jobs;
 }
 
+export async function getBlogPosts() {
+  const docs = await getDocs(query(collection(db, "blogs"), orderBy("createdAt", "desc")));
+  let blogs = [];
+  docs.forEach((doc) => { blogs.push({ id: doc.id, ...doc.data()}) });
+  return blogs;
+}
+
+export async function getTopBlogPosts(n) {
+  const docs = await getDocs(query(collection(db, "blogs"), orderBy("createdAt", "desc"), limit(n)));
+  let blogs = [];
+  docs.forEach((doc) => { blogs.push({ id: doc.id, ...doc.data()}) });
+  return blogs;
+}
+
+export async function getBlogPost(slug) {
+  const docs = await getDocs(query(collection(db, "blogs"), where('slug', '==', slug)));
+
+  if (docs.size === 0) throw new Error('No such blog exist');
+  
+  let blog;
+  docs.forEach((doc) => {
+    blog = { id: doc.id, ...doc.data() }
+  });
+  return blog;
+}
+
 export async function deleteUserAppointments(id) {
   await deleteDoc(doc(db, "appointments", id));
   return true;
@@ -110,5 +148,15 @@ export async function deleteJobApplication(id) {
 
 export async function deleteJob(id) {
   await deleteDoc(doc(db, "jobs", id));
+  return true;
+}
+
+export async function deleteHealthCareProfessionals(id) {
+  await deleteDoc(doc(db, "professionals", id));
+  return true;
+}
+
+export async function deleteBlog(id) {
+  await deleteDoc(doc(db, "blogs", id));
   return true;
 }

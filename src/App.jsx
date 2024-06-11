@@ -20,21 +20,12 @@ import ExplainerVideo from "./pages/ExplainerVideo";
 import OldData from "./pages/OldData";
 import Signin from "./pages/Signin";
 // import Signup from "./pages/Signup";
-import Protect from "./components/Protect";
 import OurTeam from "./pages/OurTeam";
-
 import Blogs from "./pages/Blogs";
-import BlogOnlinePharmacy from "./pages/Blogs/BlogOnlinePharmacy";
-import EcommerceWebsiteDesign from "./pages/Blogs/EcommerceWebsiteDesign";
-import ELibrary from "./pages/Blogs/Elibrary";
-import NavigationNABH from "./pages/Blogs/NavigationNABH";
-import SevenStrategiesToImproveHospital from "./pages/Blogs/7Strategies";
-import FuturePathology from "./pages/Blogs/FuturePathology";
-import DiagnosticImaging from "./pages/Blogs/DiagnosticImaging";
-import ComprehensiveInformation from "./pages/Blogs/ComprehensiveInformation";
+import BlogPage from "./pages/Blogs/BlogPage";
 import PageNotFound from "./pages/404";
-
 import AppointmentForm, { AppointmentForm1, AppointmentForm2 } from "./pages/Appointment";
+import JoinOurNetwork, { ReferralForm0, ReferralForm1, ReferralForm2, ReferralForm3 } from "./pages/JoinOurNetwork";
 import Dashboard from "./pages/Dashboard";
 import UsersList from "./components/Dashboard/UsersList";
 import UserDetails from "./components/Dashboard/UsersDetails";
@@ -43,9 +34,10 @@ import ProfessionalDetails from "./components/Dashboard/ProfessionalDetails";
 import JobApplicationsList from "./components/Dashboard/JobApplicationsList";
 import JobList from "./components/Dashboard/JobList";
 import JobDetails from "./components/Dashboard/JobDetails";
-
-import JoinOurNetwork, { ReferralForm0, ReferralForm1, ReferralForm2, ReferralForm3 } from "./pages/JoinOurNetwork";
-import '@mdxeditor/editor/style.css'
+import BlogList from "./components/Dashboard/BlogsList";
+import BlogDetails from "./components/Dashboard/BlogDetails";
+import Protect from "./components/Protect";
+import '@mdxeditor/editor/style.css';
 
 function App() {
   return (
@@ -75,14 +67,7 @@ function App() {
 
           <Route path="/blogs" element={<Outlet />}>
             <Route index={true} element={<Blogs />} />
-            <Route path="online-pharmacy" element={<BlogOnlinePharmacy />} />
-            <Route path="e-commerce-website-design" element={<EcommerceWebsiteDesign />} />
-            <Route path="e-library" element={<ELibrary />} />
-            <Route path="navigation-nabh" element={<NavigationNABH />} />
-            <Route path="7-strategies" element={<SevenStrategiesToImproveHospital />} />
-            <Route path="future-pathology" element={<FuturePathology />} />
-            <Route path="diagnostic-imaging" element={<DiagnosticImaging />} />
-            <Route path="comprehensive-information" element={<ComprehensiveInformation />} />
+            <Route path=":slug" element={<BlogPage />} />
           </Route>
 
           <Route path="/join-our-network" element={<JoinOurNetwork />}>
@@ -100,6 +85,9 @@ function App() {
             <Route path="job-list" element={<JobList />} />
             <Route path="job-list/:id" element={<JobDetails />} />
             <Route path="job-applications" element={<JobApplicationsList />} />
+            <Route path="blogs" element={<BlogList />} />
+            <Route path="blogs/:id" element={<BlogDetails />} />
+            {/* <Route path="create-admin" element={<Signup />} /> */}
           </Route>
 
           <Route path="/appointment" element={<AppointmentForm />}>

@@ -158,11 +158,11 @@ export function AppointmentForm2() {
         <div className="mt-6 grid grid-cols-2 gap-6 max-sm:grid-cols-1">
           <input required type="text" name="name" value={formData.name} placeholder="Full name" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
           <input required type="text" name="email" value={formData.email} placeholder="Email" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
-          <input required type="text" name="guestEmail" value={formData.guestEmail} placeholder="Guest's Email" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
+          <input type="text" name="guestEmail" value={formData.guestEmail} placeholder="Guest's Email" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
           <input required type="text" name="phone" value={formData.phone} placeholder="Phone number" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
-          <input required type="text" name="hospital" value={formData.hospital} placeholder="Hospital name" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
-          <input required type="text" name="beds" value={formData.beds} placeholder="Number of beds" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
-          <textarea required name="notes" value={formData.notes} placeholder="Share anything that will help prepare for our meeting." rows={5} onChange={handleChange} className="p-3 bg-white rounded font-normal col-span-full" />
+          <input type="text" name="hospital" value={formData.hospital} placeholder="Hospital name" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
+          <input type="text" name="beds" value={formData.beds} placeholder="Number of beds" onChange={handleChange} className="p-3 bg-white rounded font-normal" />
+          <textarea name="notes" value={formData.notes} placeholder="Share anything that will help prepare for our meeting." rows={5} onChange={handleChange} className="p-3 bg-white rounded font-normal col-span-full" />
         </div>
 
         <div className="flex justify-end items-center gap-2 mt-8 max-sm:flex-col">

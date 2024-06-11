@@ -57,11 +57,11 @@ function Slide({ image, text, name, position }) {
       </div>
 
       <div className="flex gap-4 items-center">
-        <img
+        {/* <img
           src="/user.svg"
           alt=""
           className="rounded-full size-16 object-cover"
-        />
+        /> */}
 
         <div>
           <p className="font-medium">{name}</p>

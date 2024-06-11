@@ -29,22 +29,30 @@ let faqs = [
   },
   {
     title: "Can Super Dr help us improve patient engagement and communication?",
+    paragraph: "Yes, Super Dr offers various features to enhance patient engagement and communication. Patients can access their health records, schedule appointments, and receive updates through the Super Dr patient portal. Additionally, our software allows for secure and efficient communication between healthcare professionals and patients, improving overall patient experience and satisfaction.",
+  },
+  {
+    title: "Can Super Dr integrate with existing systems in our hospital?",
+    paragraph: "Yes, Super Dr is built to be easily integrable with various third-party systems and applications. Our team will work to seamlessly integrate the software with your existing Software or hardware systems, ensuring a smooth transition.",
+  },
+  {
+    title: "Can Super Dr help in managing our medical inventory and supplies?",
     paragraph: "Absolutely! Super Dr includes an advanced inventory management module that helps you efficiently manage medical supplies, track stock levels, and streamline procurement processes. This feature ensures you have the right supplies at the right time.",
   },
   {
-    title: "Can Super Dr help us improve patient engagement and communication?",
-    paragraph: "Absolutely! Super Dr includes an advanced inventory management module that helps you efficiently manage medical supplies, track stock levels, and streamline procurement processes. This feature ensures you have the right supplies at the right time.",
+    title: "What is the cost of Super Dr?",
+    paragraph: "The cost of Super Dr varies based on the size and requirements of your healthcare facility. Our pricing starts from Rs 200,000 and can go up to Rs 60,00,000 per year. Our team will provide you with a customized quote tailored to your specific needs.",
   },
   {
-    title: "Can Super Dr help us improve patient engagement and communication?",
-    paragraph: "Absolutely! Super Dr includes an advanced inventory management module that helps you efficiently manage medical supplies, track stock levels, and streamline procurement processes. This feature ensures you have the right supplies at the right time.",
+    title: "Will my staff need extensive training to use Super Dr effectively?",
+    paragraph: "Super Dr is designed with user-friendliness in mind. While basic training is provided during the implementation phase, our intuitive interface ensures that your staff can quickly adapt to the system. We also offer video tutorials, & ongoing support training 24X7 to address any questions or concerns.",
   },
   {
-    title: "Can Super Dr help us improve patient engagement and communication?",
-    paragraph: "Absolutely! Super Dr includes an advanced inventory management module that helps you efficiently manage medical supplies, track stock levels, and streamline procurement processes. This feature ensures you have the right supplies at the right time.",
+    title: "How long will Super Dr last?",
+    paragraph: "Super Dr is designed to be a long-term solution for your healthcare facility. With continuous updates and enhancements, the software will remain cutting-edge and future-proof. Our commitment to excellence ensures that Super Dr will continue to meet your evolving needs for years to come.",
   },
   {
-    title: "Can Super Dr help us improve patient engagement and communication?",
-    paragraph: "Absolutely! Super Dr includes an advanced inventory management module that helps you efficiently manage medical supplies, track stock levels, and streamline procurement processes. This feature ensures you have the right supplies at the right time.",
+    title: "How long does it take to implement Super Dr in our hospital?",
+    paragraph: "The implementation time can vary depending on the size of your facility and the scope of customization required. Generally, the process takes a few days to a few weeks. Our team will work efficiently to minimize any disruption to your operations during the implementation phase. In an emergency situation we can install and go live in 3 Days",
   },
 ];

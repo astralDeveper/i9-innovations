@@ -5,23 +5,30 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Pagination from "../Pagination";
 import { paginateArray } from "../../utils/functions";
 import { deleteUserAppointments, getUserAppointments } from "../../config/firebase";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function UsersList() {
   const { usersList, setUsersList } = useOutletContext();
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteJobId, setDeleteJobId] = useState(null);
 
   const paginatedUsers = useMemo(() => paginateArray(usersList, 10), [usersList]);
 
   const handleDelete = async () => {
+    setLoading(true)
     try {
       await deleteUserAppointments(deleteJobId);
       const appointments = await getUserAppointments();
       setUsersList(appointments);
       setIsDeleteModalOpen(false);
     } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
       setIsDeleteModalOpen(false);
+      setDeleteJobId(null);
     }
   }
 
@@ -36,6 +43,8 @@ export default function UsersList() {
         List of Appointments ({usersList.length})
       </h2>
 
+      {loading && <LoadingSpinner />}
+
       <div className="mt-10 w-full overflow-x-auto [scrollbar-width:thin]">
         {usersList.length === 0 ?
           <p>No appointments</p>
@@ -45,8 +54,7 @@ export default function UsersList() {
               <tr className="text-[#0065C0] font-medium">
                 <td>Name</td>
                 <td>Email</td>
-                <td>Mobile Number</td>
-                <td>Hospital</td>
+                <td>Phone</td>
                 <td>Details</td>
                 <td>Action</td>
               </tr>
@@ -58,7 +66,6 @@ export default function UsersList() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
-                  <td>{user.hospital}</td>
                   <td>
                     <Link to={`/dashboard/users/${user.id}`} state={{ user }} className="text-[#0065C0] underline hover:decoration-transparent transition-colors flex justify-center items-center group">
                       <span>View Details</span>
@@ -82,7 +89,7 @@ export default function UsersList() {
             <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 focus:outline-none">
               <Dialog.Description className="text-zinc-800 mt-[10px] mb-5 leading-normal" asChild>
                 <div className="flex gap-4 flex-col">
-                  <p>Are you sure you want to delete this job?</p>
+                  <p>Are you sure you want to delete this user?</p>
                 </div>
               </Dialog.Description>
               <div className="mt-6 flex gap-4 justify-end items-center">

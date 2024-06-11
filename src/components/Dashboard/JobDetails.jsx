@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { RiAddLine, RiCloseLine } from "@remixicon/react";
+import { useRef, useState } from "react";
+import { RiAddLine, RiCloseLine, RiPencilLine } from "@remixicon/react";
 import * as Dialog from '@radix-ui/react-dialog';
 import { Link, useLocation, useOutletContext } from "react-router-dom";
 import { BlockTypeSelect, BoldItalicUnderlineToggles, ListsToggle, MDXEditor, UndoRedo, listsPlugin, headingsPlugin, toolbarPlugin } from '@mdxeditor/editor';
@@ -25,6 +25,16 @@ export default function JobDetails() {
     title: job.title ?? '',
     description: job.description ?? '',
   })
+  
+  const markdownRef = useRef(null);
+  const [jobData, setJobData] = useState(() => {
+    if (!job) return null
+
+    return {
+      title: job.title ?? '',
+      description: job.description ?? '',
+    }
+  })
 
   const handleChange = (e) => {
     setFormData((s) => ({
@@ -42,6 +52,9 @@ export default function JobDetails() {
       await editJob(job.id, formData);
       const jobs = await getJobs();
       setJobsList(jobs);
+
+      setJobData(formData);
+      markdownRef.current?.setMarkdown(formData.description);
       setLoading(false);
       setIsModalOpen(true);
       setErrorMsg('Your job has been submitted. ');
@@ -52,22 +65,22 @@ export default function JobDetails() {
     }
   }
 
-  if (!job) return null;
+  if (!jobData) return null;
 
   return (
     <div>
       <div className="bg-white rounded-lg p-8 max-lg:p-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-3xl font-semibold max-sm:text-xl">
-            {formData.title}
+          <h2 className="text-3xl font-semibold max-sm:text-2xl text-[#0065C0]">
+            {jobData.title}
           </h2>
 
           {loading && <LoadingSpinner />}
 
           <Dialog.Root open={isFormModalOpen} onOpenChange={setIsFormModalOpen}>
             <Dialog.Trigger asChild>
-              <button className="px-3 py-2.5 bg-[#0065C0] rounded-full text-white hover:shadow-lg hover:bg-[#1a74c6] flex items-center justify-center">
-                <RiAddLine size={18} />
+              <button className="px-3 py-2.5 bg-[#0065C0] rounded-md text-white hover:shadow-lg hover:bg-[#1a74c6] flex items-center justify-center">
+                <RiPencilLine size={18} />
                 Edit job
               </button>
             </Dialog.Trigger>
@@ -101,7 +114,7 @@ export default function JobDetails() {
                       </div>
                     </div>
 
-                    <button type="submit" className="max-w-max self-center px-10 py-2.5 bg-[#0065C0] rounded-full text-white hover:shadow-lg hover:bg-[#1a74c6] transition-all">
+                    <button type="submit" className="max-w-max self-center px-10 py-2.5 bg-[#0065C0] rounded-md text-white hover:shadow-lg hover:bg-[#1a74c6] transition-all">
                       Save
                     </button>
                   </form>
@@ -137,8 +150,8 @@ export default function JobDetails() {
         </Dialog.Root>
 
 
-        <div className="prose prose-zinc [&_.mdxeditor]:font-sans mt-4">
-          <MDXEditor markdown={formData.description} contentEditableClassName="w-full" plugins={[headingsPlugin(), listsPlugin()]} readOnly />
+        <div className="prose prose-zinc max-w-none [&_.mdxeditor]:font-sans mt-4">
+          <MDXEditor ref={markdownRef} markdown={jobData.description} contentEditableClassName="w-full" plugins={[headingsPlugin(), listsPlugin()]} readOnly />
         </div>
       </div>
 

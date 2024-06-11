@@ -17,26 +17,26 @@ export default function ProfessionalDetails() {
           User Information
         </h2>
 
-        <ul className="mt-10 grid grid-cols-2 gap-6 [&_h3]:text-[#0065C0] [&_h3]:font-medium max-sm:grid-cols-1">
+        <ul className="mt-10 grid grid-cols-2 gap-6 [&_h3]:text-[#0065C0] [&_h3]:font-medium [&_a]:underline hover:[&_a]:decoration-transparent [&_a]:transition-all max-sm:grid-cols-1">
           <li>
             <h3>Full name</h3>
             <p>{user.firstName} {user.lastName}</p>
           </li>
           <li>
             <h3>Email</h3>
-            <p>{user.email}</p>
+            <a href={`mailto:${user.email}`}>{user.email}</a>
           </li>
           <li>
             <h3>Phone</h3>
-            <p>{user.phone}</p>
+            <a href={`tel:${user.phone}`}>{user.phone}</a>
           </li>
           <li>
             <h3>Website</h3>
-            <p>{user.website}</p>
+            <a href={user.website} target="_blank">{user.website}</a>
           </li>
           <li>
             <h3>Whatsapp</h3>
-            <p>{user.whatsapp}</p>
+            <a href={`https://wa.me/${user.whatsapp}`}>{user.whatsapp}</a>
           </li>
         </ul>
       </div>
@@ -119,7 +119,7 @@ export default function ProfessionalDetails() {
           Summary
         </h2>
 
-        <div className="mt-10 w-full overflow-x-auto [scrollbar-width:thin]">
+        <div className="mt-10 w-full">
           <p>{user.aboutYourself}</p>
         </div>
       </div>

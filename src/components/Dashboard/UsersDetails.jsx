@@ -19,7 +19,7 @@ export default function UserDetails() {
     <div>
       <div className="bg-white rounded-lg p-8 max-lg:p-4">
         <h2 className="text-3xl font-semibold max-sm:text-xl">
-          Login Information
+          Appointment Details
         </h2>
 
         <ul className="mt-10 grid grid-cols-2 gap-6 [&_h3]:text-[#0065C0] [&_h3]:font-medium max-sm:grid-cols-1">
@@ -35,14 +35,24 @@ export default function UserDetails() {
             <h3>Mobile Number</h3>
             <p>{user.phone}</p>
           </li>
-          <li>
-            <h3>Hospital</h3>
-            <p>{user.hospital}</p>
-          </li>
-          <li>
-            <h3>Number of beds</h3>
-            <p>{user.beds}</p>
-          </li>
+          {user.guestEmail &&
+            <li>
+              <h3>Guest Email</h3>
+              <p>{user.guestEmail}</p>
+            </li>
+          }
+          {user.hospital &&
+            <li>
+              <h3>Hospital</h3>
+              <p>{user.hospital}</p>
+            </li>
+          }
+          {user.beds &&
+            <li>
+              <h3>Number of beds</h3>
+              <p>{user.beds}</p>
+            </li>
+          }
         </ul>
       </div>
 
@@ -62,6 +72,18 @@ export default function UserDetails() {
               <p className="bg-slate-100 p-2 rounded-md">{selectedDateTime.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' })}</p>
             </li>
           </ul>
+        </div>
+      }
+
+      {user.notes &&
+        <div className="bg-white rounded-lg p-8 max-lg:p-4 col-start-2 mt-6 max-lg:mt-2">
+          <h2 className="text-3xl font-semibold max-sm:text-xl">
+            Appointment Notes
+          </h2>
+
+          <div className="mt-10 w-full">
+            <p>{user.notes}</p>
+          </div>
         </div>
       }
 
